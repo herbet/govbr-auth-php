@@ -1,0 +1,9 @@
+# Dependências do Node.js
+public/node_modules
+public/package-lock.json
+
+# Dependências do Composer
+vendor
+
+# Arquivos gerados pelo sistema
+*.lock

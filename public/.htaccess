@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Redireciona qualquer acesso a /index (sem extensão) para index.php
+#RewriteRule ^index$ index.php [L]
