@@ -19,6 +19,12 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
         echo "<h2>Usuário autenticado com sucesso:</h2><pre>";
         print_r($usuario); // Exibe os dados do usuário autenticado
         echo "</pre>";
+
+        // Exibe a imagem do usuário se estiver disponível
+        if (!empty($usuario['picture'])) {
+            echo '<h3>Foto do usuário:</h3>';
+            echo '<img src="' . $usuario['picture'] . '" alt="Foto do usuário" style="max-width: 150px; border-radius: 50%;">';
+        }
     } catch (Exception $e) {
         // Exibe mensagens de erro caso ocorra algum problema
         echo "<p>Erro: " . $e->getMessage() . "</p>";

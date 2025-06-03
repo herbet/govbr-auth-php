@@ -124,6 +124,11 @@ class GovBrAuth {
         $accessClaims = (array) JWT::decode($access_token, $keys);
         $idClaims = (array) JWT::decode($id_token, $keys);
 
+        // Pega a foto do usuário, se disponível
+        if (isset($idClaims['picture'])) {
+            $idClaims['picture'] = $this->getFoto($idClaims['picture'], $access_token);
+        }
+
         // Retorna as informações do usuário
         return [
             'cpf' => $idClaims['sub'] ?? null,
