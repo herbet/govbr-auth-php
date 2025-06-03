@@ -124,25 +124,24 @@ class GovBrAuth {
         $accessClaims = (array) JWT::decode($access_token, $keys);
         $idClaims = (array) JWT::decode($id_token, $keys);
 
-        // Pega a foto do usuário, se disponível
-        if (isset($idClaims['picture'])) {
-            $idClaims['picture'] = $this->getFoto($idClaims['picture'], $access_token);
-        }
-
         // Retorna as informações do usuário
         return [
-            'cpf' => $idClaims['sub'] ?? null,
-            'name' => $idClaims['name'] ?? null,
-            'email' => $idClaims['email'] ?? null,
-            'email_verified' => $idClaims['email_verified'] ?? null,
-            'phone_number' => $idClaims['phone_number'] ?? null,
-            'phone_number_verified' => $idClaims['phone_number_verified'] ?? null,
-            'picture' => $idClaims['picture'] ?? null,
-            'scope' => $accessClaims['scope'] ?? null,
-            'client_id' => $accessClaims['aud'] ?? null,
-            'iss' => $accessClaims['iss'] ?? null,
-            'exp' => $accessClaims['exp'] ?? null,
-            'iat' => $accessClaims['iat'] ?? null
+            'cpf'                   => $idClaims['sub'] ?? null, // CPF do usuário autenticado
+            'name'                  => $idClaims['name'] ?? null, // Nome cadastrado no Gov.br do usuário autenticado.
+            'social_name'           => $idClaims['social_name'] ?? null, // Nome Social cadastrado no Gov.br do usuário autenticado.Aparecerá apenas se existir no cadastro
+            'email'                 => $idClaims['email'] ?? null, // Endereço de e-mail cadastrado no Gov.br do usuário autenticado. Caso o atributo email_verified do ID_TOKEN tiver o valor false, o atributo email não virá no ID_TOKEN
+            'email_verified'        => $idClaims['email_verified'] ?? null, // Confirma se o email foi validado no cadastro do Gov.br. Poderá ter o valor "true" ou "false"
+            'phone_number'          => $idClaims['phone_number'] ?? null, // Número de telefone cadastrado no Gov.br do usuário autenticado. Caso o atributo phone_number_verified do ID_TOKEN tiver o valor false, o atributo phone_number não virá no ID_TOKEN
+            'phone_number_verified' => $idClaims['phone_number_verified'] ?? null, // Confirma se o telefone foi validado no cadastro do Gov.br. Poderá ter o valor "true" ou "false"
+            'picture'               => $idClaims['picture'] ?? null, // URL de acesso à foto do usuário cadastrada no Gov.br. A mesma é protegida e pode ser acessada passando o access token recebido.
+            'cnpj'                  => $idClaims['cnpj'] ?? null, // CNPJ vinculado ao usuário autenticado. Atributo será preenchido quando autenticação ocorrer por certificado digital de pessoal jurídica.
+            'scope'                 => $accessClaims['scope'] ?? null, // Escopos autorizados pelo provedor de autenticação.
+            'amr'                   => $accessClaims['amr'] ?? null, // Listagem dos fatores de autenticação do usuário com detalhamento. Verificar nas observações para os detalhamentos.
+            'client_id'             => $accessClaims['aud'] ?? null, // Client ID da aplicação onde o usuário se autenticou
+            'iss'                   => $accessClaims['iss'] ?? null, // URL do provedor de autenticação que emitiu o token.
+            'exp'                   => $accessClaims['exp'] ?? null, // Data/hora de expiração do token
+            'iat'                   => $accessClaims['iat'] ?? null, // Data/hora em que o token foi emitido.
+            'jti'                   => $accessClaims['jti'] ?? null // Identificador único do token, reconhecido internamente pelo provedor de autenticação.
         ];
     }
 
