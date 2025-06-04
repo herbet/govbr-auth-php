@@ -16,6 +16,12 @@ Este projeto implementa autenticação Login Único do **GOV.BR** utilizando **O
 ├── src/
 │   ├── GovBrAuth.php
 ```
+### Requisitos
+
+- PHP 8.1 ou superior
+- Composer
+- Node.js e npm (para o Design System do Gov.BR)
+- Docker (opcional)
 
 ### Principais Arquivos
 
@@ -25,15 +31,6 @@ Este projeto implementa autenticação Login Único do **GOV.BR** utilizando **O
 - **`docker-compose.yml`**: Arquivo de configuração para orquestrar o ambiente Docker.
 - **`composer.json`**: Gerencia as dependências do projeto.
 - **`public/package.json`**: Arquivo de configuração para instalar as dependências do Design System do Gov.BR.
-
-## Instalação
-
-### Requisitos
-
-- PHP 8.1 ou superior
-- Composer
-- Node.js e npm (para o Design System do Gov.BR)
-- Docker (opcional)
 
 ### Passos
 
@@ -66,6 +63,36 @@ Este projeto implementa autenticação Login Único do **GOV.BR** utilizando **O
      ```bash
      docker-compose up -d
      ```
+
+## Apontamento local do domínio cadastrado no gov.br
+
+Para que o fluxo de autenticação com o Login Único do gov.br funcione corretamente em ambiente de desenvolvimento (como localhost), é **necessário realizar o apontamento local** do domínio que foi cadastrado como *redirect URI* na solicitação de credenciais no gov.br.
+
+### Exemplo (Linux ou WSL)
+
+Edite o arquivo `/etc/hosts` com privilégios administrativos:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Adicione a seguinte linha (ajuste para o domínio que você cadastrou):
+
+```
+127.0.0.1    sistema.gov.br
+```
+
+### Exemplo (Windows)
+
+Edite o arquivo `C:\Windows\System32\drivers\etc\hosts` com permissões de administrador e adicione:
+
+```
+127.0.0.1    sistema.cgu.gov.br
+```
+
+> **Importante:** esse apontamento é necessário apenas em ambiente local.  
+
+---
 
 ### Fluxo de Autenticação
 
